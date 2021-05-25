@@ -1,0 +1,72 @@
+#配置服务器信息
+server:
+  port: 8089
+  servlet:
+    context-path: /
+
+
+
+#数据库信息配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/lanling_db?Unicode=true&useAffectedRows=true&serverTimezone=GMT&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    devtools:
+      restart:
+        enabled: false  #设置开启热部署
+    jpa:
+      hibernate:
+        ddl-auto:
+      show-sql: true
+      transaction:
+        rollback-on-commit-failure: true
+
+  #  freemarker:
+  #    templateLoaderPath: classpath:/templates/
+  #    suffix: .ftl
+  #    charset: UTF-8
+  #    request-context-attribute: request
+
+  #    settings:
+  #      number_format: 0
+
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false #开发时关闭缓存,不然没法看到 实时页面
+
+
+
+
+
+mybatis:
+  mapper-locations: classpath:com/erp/dao/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+view:
+  scan:
+    auto: true
+    suffix: .ftl,.html
+    #    viewBasePath: templates/
+    viewPaths: #只能映射templates目录下的
+      - templates/
+
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+  params: countSql
+
+
+
+#logging:
+#  level:
+#    com.muyan.mapper: debug #打印sql
+#  config: classpath:logback.xml
