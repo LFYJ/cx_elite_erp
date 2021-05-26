@@ -5,7 +5,7 @@
     overflow: hidden;
 }
 .login{
-    margin: 300px auto 0 auto;
+    margin: 250px auto 0 auto;
     min-height: 420px;
     max-width: 420px;
     padding: 40px;
@@ -97,4 +97,27 @@
     margin: 0px;
     padding: 0px;
     width: 100%;
+}
+.login_name{
+    font-size: 24px;
+    font-family: emoji;
+    text-align: center;
+}
+#canvas {
+    float: right;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 19%;
+}
+.login_yzm{
+    background-color: #09b4c5;
+    width: 44%;
+    float: left;
+    height: 50px;
+    margin-left: 6%;
+    text-align: center;
+    line-height: 50px;
+    font-size: 14px;
 }

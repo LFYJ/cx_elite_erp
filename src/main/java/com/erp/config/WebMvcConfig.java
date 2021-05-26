@@ -23,7 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
 //            addViewController：对应的地址栏请求
 //            setViewName：渲染页面的实际路径
-        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/").setViewName("login");
     }
 
     /**

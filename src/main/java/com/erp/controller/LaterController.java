@@ -45,6 +45,14 @@ public class LaterController {
     public String backups(){
         return  "/prototype/backups";
     }
+    /**
+     * 跳转到人员列表
+     * @return
+     */
+    @RequestMapping("/staff/list")
+    public String stafflist(){
+        return  "/staff/list";
+    }
 
 
 
