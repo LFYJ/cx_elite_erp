@@ -9,7 +9,7 @@ server:
 #数据库信息配置
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/lanling_db?Unicode=true&useAffectedRows=true&serverTimezone=GMT&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/jrjx_db?Unicode=true&useAffectedRows=true&serverTimezone=GMT&allowMultiQueries=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

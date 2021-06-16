@@ -3,11 +3,14 @@ package com.erp.controller;
 
 
 import com.erp.config.IdGenerator;
+import com.erp.service.impl.RedisUtils;
+import com.erp.util.SendMessageUtil;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -21,10 +24,28 @@ public class LaterController {
     @Resource
     private IdGenerator idGenerator;
 
+    @Resource
+    private RedisUtils redisUtils;
+
+
+
+    //获取短信验证码信息
+    @RequestMapping("/short/message")
+    public String goShortMessage(){
+
+        String yanzhengam = SendMessageUtil.getRandomCode(6);
+
+        SendMessageUtil.send("13752547419","验证码："+yanzhengam);
+
+        redisUtils.set("验证码",yanzhengam,60L, TimeUnit.MINUTES);
+
+        return  "/index";
+    }
 
 
     @RequestMapping("/login")
     public String login(){
+        //redisUtils.set("time","测试缓存失效时间",10L, TimeUnit.MINUTES);
         return  "/index";
     }
 
@@ -51,8 +72,10 @@ public class LaterController {
      */
     @RequestMapping("/staff/list")
     public String stafflist(){
-        return  "/staff/list";
+        return  "/staff/staff_list";
     }
+
+
 
 
 
