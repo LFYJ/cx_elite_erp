@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.UserDao">
+
+    <!--表字段-->
+    <sql id="sqlusercolumn">
+
+       id,job_number,name,password,department_id,gender,position_id,education,identity_ard,nation,phone
+       ,emergency_user,emergency_phone,social_security,bank_card,hukou_type,present_address,address,school_by
+       marriage,state,user_img,occupational,entry_date,dimission_date
+
+    </sql>
+
+
+    <!--用户表条件查询-->
+    <sql id="sqlwhereusercolumn">
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="id!= null and id!=''">
+                id=#{id}
+            </if>
+            <if test="jobNumber!= null and jobNumber!=''">
+                and  job_number=#{jobNumber}
+            </if>
+            <if test="name!= null and name!=''">
+                and name=#{name}
+            </if>
+            <if test="password!= null and password!=''">
+                and password=#{password}
+            </if>
+
+            <if test="departmentId!= null and departmentId!=''">
+                and  department_id=#{departmentId}
+            </if>
+            <if test="gender!= null and gender!=''">
+                and  gender=#{gender}
+            </if>
+            <if test="education!= null and education!=''">
+                and  education=#{education}
+            </if>
+            <if test="phone!= null and phone!=''">
+                and  phone=#{phone}
+            </if>
+            <if test="socialSecurity!= null and socialSecurity!=''">
+                and  social_security=#{socialSecurity}
+            </if>
+            <if test="entryDate!= null and entryDate!=''">
+                and  entry_date=#{entryDate}
+            </if>
+            <if test="dimissionDate!= null and dimissionDate!=''">
+                and  dimission_date=#{dimissionDate}
+            </if>
+
+
+        </trim>
+    </sql>
+
+
+    <!-- 查询用户信息-->
+    <select id="selectByUser" parameterType="com.erp.entity.User" resultType="com.erp.entity.User">
+        select * from jr_user
+        <include refid="sqlwhereusercolumn"/>
+    </select>
+
+
+
+
+
+
+
+
+
+</mapper>
