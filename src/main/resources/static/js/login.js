@@ -1,4 +1,5 @@
 
+
 $(function  () {
     var show_num = [];
     draw(show_num);
@@ -20,9 +21,20 @@ $(function  () {
             }else if(val == num){
                 $(".input-val").val('');
                 draw(show_num);
-                layer.msg(JSON.stringify(data.field),function(){
 
+                $.ajax({
+                    type: "post",
+                    url: "/later/login",
+                    data: {"username": data.field.username, "password": data.field.password},
+                    success: function (data) {
+                        if (data.state === 200) {
+                            //非首次加载 do something
+                            window.location.href = "/later/goindex"
+                        }
+                        layer.msg(data.msg);
+                    }
                 });
+
             }else{
                 alert('验证码错误！请重新输入！');
                 $(".input-val").val('');
@@ -31,6 +43,31 @@ $(function  () {
 
             return false;
         });
+
+        //手机号登录
+        form.on('submit(sj_login)', function(data){
+
+
+            $.ajax({
+                type: "post",
+                url: "/later/login/message",
+                data: {"phone": data.field.phone, "verify": data.field.verify},
+                success: function (data) {
+                    if (data.state === 200) {
+                        //非首次加载 do something
+                        window.location.href = "/later/goindex"
+                    }
+                    layer.msg(data.msg);
+                }
+            });
+            return false;
+        });
+
+
+
+
+
+
     });
 });
 
@@ -117,8 +154,30 @@ function js_alert(a) {//得到随机的颜色值
 
 //获取验证码信息
 function getyam(){
-    alert("获取验证码信息");
-    daojishi(60);
+    var phone=$("#yz_phone").val();
+    if(phone!=""&&phone!=null){
+        //验证手机号格式
+        if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(phone))) {
+            layer.msg("手机号码有误，请重填");
+        }else {
+            $.ajax({
+                type: "post",
+                url: "/later/short/message",
+                data: {"phone": phone},
+                success: function (data) {
+                    if (data.state != 203) {
+                        //60秒后重置
+                        daojishi(60);
+                    }
+                    layer.msg(data.msg);
+                }
+            });
+        }
+
+    }else {
+        layer.msg("不能为空或格式不正确");
+    }
+
 }
 
 //倒计时

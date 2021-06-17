@@ -21,7 +21,7 @@
         <div class="login_name">曹县精锐机械ERP系统</div>
         <div id="darkbannerwrap"></div>
 
-
+        <!-- 用户名密码登录-->
         <form method="post" class="layui-form" id="np_login">
             <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
@@ -37,12 +37,12 @@
             <hr class="hr20" >
             <a href="#" onclick="js_alert(1)">手机号登录</a>
         </form>
-
+         <!--手机号登录-->
         <form method="post" class="layui-form" id="sj_login" style="display: none;" >
-            <input name="username" placeholder="请输入手机号"  type="text" lay-verify="required" class="layui-input" >
+            <input name="phone" id="yz_phone"  placeholder="请输入手机号"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr20">
             <div style="background-color: #00FF00">
-                <input name="yanzhengma" lay-verify="required"  value=""
+                <input name="verify" lay-verify="required"  value=""
                        style="width:50%;float: left" placeholder="验证码"  type="text" class="layui-input input-val">
                 <div class="login_yzm">
                     <input type="button" id="yzm" value="获取验证码" onclick="getyam(60)" />
