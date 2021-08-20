@@ -52,7 +52,7 @@ mybatis:
 view:
   scan:
     auto: true
-    suffix: .ftl,.html
+    suffix: .html
     #    viewBasePath: templates/
     viewPaths: #只能映射templates目录下的
       - templates/

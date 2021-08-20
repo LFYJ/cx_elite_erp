@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.DormitoryDao">
+
+
+
+
+    <select id="dormitorylist" parameterType="com.erp.entity.personnel.Dormitory" resultType="com.erp.entity.personnel.Dormitory">
+        select * from jr_dormitory
+        <trim prefix="where" prefixOverrides="and" >
+
+            <if test="id!= null and id">
+                and id=#{id}
+            </if>
+            <if test="dormitoryno!= null and dormitoryno">
+                and dormitoryno=#{dormitoryno}
+            </if>
+        </trim>
+        Order By create_date   Desc
+    </select>
+
+
+
+
+
+
+    <!--删除宿舍管理-->
+    <delete id="dormitorydelete" parameterType="java.lang.Long">
+     delete from jr_dormitory where id=#{id}
+    </delete>
+
+
+
+    <insert id="dormitoryadd" parameterType="com.erp.entity.personnel.Dormitory">
+        insert into jr_dormitory
+        VALUES ( #{id},#{dormitoryno},#{place},#{resideNnt},
+        #{presentNnt},#{state},#{createDate},#{particulars})
+    </insert>
+
+
+
+
+
+    <select id="dormitory" parameterType="com.erp.entity.personnel.Dormitory" resultType="com.erp.entity.personnel.Dormitory">
+        select * from jr_dormitory
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="id!= null and id">
+                and id=#{id}
+            </if>
+            <if test="dormitoryno!= null and dormitoryno">
+                and dormitoryno=#{dormitoryno}
+            </if>
+        </trim>
+        Order By create_date   Desc
+    </select>
+
+
+
+
+
+    <!--更新宿舍信息-->
+    <update id="dormitoryupt" parameterType="com.erp.entity.personnel.Dormitory">
+        update jr_dormitory
+        <set>
+
+            <if test="dormitoryno!= null and dormitoryno!=''">
+                dormitoryno=#{dormitoryno},
+            </if>
+            <if test="place!= null and place!=''">
+                place=#{place},
+            </if>
+            <if test="resideNnt!= null and resideNnt!=''">
+                reside_nnt=#{resideNnt},
+            </if>
+            <if test="presentNnt!= null and presentNnt!=''">
+                present_nnt=#{presentNnt},
+            </if>
+            <if test="particulars!= null and particulars!=''">
+                particulars=#{particulars}
+            </if>
+
+        </set>
+
+        where id = #{id}
+    </update>
+
+</mapper>

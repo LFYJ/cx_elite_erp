@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.MobilityDao">
+
+
+
+
+    <!-- 查询所有调动-->
+    <select id="personnelTransferList" parameterType="com.erp.entity.personnel.Mobility" resultType="com.erp.entity.personnel.Mobility">
+        select * from jr_mobility
+
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="id!=null and id!=''">
+                      id=#{id}
+            </if>
+            <if test=" username!=null and username!=''">
+                and  username=#{username}
+            </if>
+            <if test=" userId!=null and userId!=''">
+                and  user_id=#{userId}
+            </if>
+            <if test=" type!=null and type!=''">
+                and  type=#{type}
+            </if>
+
+        </trim>
+
+        Order By create_date Desc
+    </select>
+
+
+    <!-- 查询调动记录-->
+    <select id="personnelTransfer" parameterType="com.erp.entity.personnel.Mobility" resultType="com.erp.entity.personnel.Mobility">
+        select * from jr_mobility
+
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="id!=null and id!=''">
+                id=#{id}
+            </if>
+            <if test=" username!=null and username!=''">
+                and  username=#{username}
+            </if>
+            <if test=" type!=null and type!=''">
+                and  type=#{type}
+            </if>
+
+        </trim>
+
+        Order By create_date Desc
+    </select>
+
+
+
+    <!--删除用户-->
+    <delete id="personneltransferdelete" parameterType="java.lang.Long">
+     delete from jr_mobility where id=#{id}
+    </delete>
+
+   <!-- 添加调动记录-->
+    <insert id="personneltransferadd" parameterType="com.erp.entity.personnel.Mobility">
+        insert into jr_mobility
+        VALUES ( #{id},#{userId},#{username},#{gender},#{birthdate},#{phone},#{identityArd},
+        #{departmentId},#{departmentName},#{positionId},#{positionName},#{toDepartmentId},
+        #{toDepartmentName},
+        #{toPositionId},#{toPositionName},
+        #{transferData},#{type},#{createDate},
+        #{groupingId},#{groupingName},#{toGroupingId},#{toGroupingName})
+    </insert>
+
+
+</mapper>

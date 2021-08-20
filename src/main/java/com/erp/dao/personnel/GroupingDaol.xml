@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.GroupingDao">
+
+
+
+
+
+    <!-- 查询职位信息-->
+    <select id="selectByListGroupingBypid" parameterType="com.erp.entity.personnel.Grouping" resultType="com.erp.entity.personnel.Grouping">
+        select * from jr_grouping
+
+        <trim prefix="where" prefixOverrides="and" >
+
+            <if test="pid!= null and pid!=''">
+                and pid=#{pid}
+            </if>
+        </trim>
+
+        Order By create_date asc
+    </select>
+
+
+
+
+    <insert id="addGrouping" parameterType="com.erp.entity.personnel.Grouping">
+        insert into jr_grouping
+        VALUES ( #{groupingId},#{pid},#{groupingName},#{positionCreatorName},#{createDate},#{positionState})
+    </insert>
+
+
+
+    <delete id="groupingdelete" parameterType="java.lang.Long">
+     delete from jr_grouping where grouping_id=#{id}
+    </delete>
+
+
+
+    <!-- 查询职位信息-->
+    <select id="selectByGrouping" parameterType="com.erp.entity.personnel.Grouping" resultType="com.erp.entity.personnel.Grouping">
+        select * from jr_grouping
+        <trim prefix="where" prefixOverrides="and" >
+
+            <if test="groupingId!= null and groupingId!=''">
+                and  grouping_id=#{groupingId}
+            </if>
+        </trim>
+
+        Order By create_date asc
+    </select>
+
+
+
+
+    <!--更新职位信息-->
+    <update id="uptGrouping" parameterType="com.erp.entity.personnel.Grouping">
+        update jr_grouping
+        <set>
+
+            <if test="groupingName!= null and groupingName!=''">
+                grouping_name=#{groupingName}
+            </if>
+
+        </set>
+        where grouping_id = #{groupingId}
+    </update>
+
+</mapper>

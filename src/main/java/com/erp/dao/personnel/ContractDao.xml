@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.ContractDao">
+
+
+
+    <!-- 查询合同信息-->
+    <select id="contractlist" parameterType="com.erp.entity.personnel.Contract" resultType="com.erp.entity.personnel.Contract">
+        select * from jr_contract
+        <trim prefix="where" prefixOverrides="and" >
+
+            <if test="name!= null and name!=''">
+                and name=#{name}
+            </if>
+
+            <if test="expireDate!= null and signedDate!= null ">
+                and   expire_date  &lt;= #{expireDate}
+                and   expire_date  &gt;=  #{signedDate}
+            </if>
+
+
+        </trim>
+        Order By signed_date Desc
+    </select>
+
+
+
+    <select id="contractbyid" parameterType="com.erp.entity.personnel.Contract" resultType="com.erp.entity.personnel.Contract">
+        select * from jr_contract
+        <trim prefix="where" prefixOverrides="and" >
+
+            <if test="name!= null and name">
+                and name=#{name}
+            </if>
+            <if test="id!= null and id">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+
+    <!--删除合同-->
+    <delete id="contractdelete" parameterType="java.lang.Long">
+     delete from jr_contract where id=#{id}
+    </delete>
+
+    <!--添加合同-->
+    <insert id="contractadd" parameterType="com.erp.entity.personnel.Contract">
+        insert into jr_contract
+        VALUES ( #{id},#{userId},#{wno},#{name},
+        #{signedDate},#{expireDate},#{state})
+    </insert>
+
+
+
+
+
+    <!--更新合同-->
+    <update id="contractupt" parameterType="com.erp.entity.personnel.Contract">
+        update jr_contract
+        <set>
+
+            <if test="signedDate!= null">
+                signed_date=#{signedDate},
+            </if>
+            <if test="expireDate!= null ">
+                expire_date=#{expireDate}
+            </if>
+
+        </set>
+
+        where id = #{id}
+    </update>
+
+
+
+    <!-- 查询未到期合同信息-->
+    <select id="contractlistBynoexpire" parameterType="com.erp.entity.personnel.Contract" resultType="com.erp.entity.personnel.Contract">
+        select * from jr_contract
+        <trim prefix="where" prefixOverrides="and" >
+
+            <if test="name!= null and name!=''">
+                and name=#{name}
+            </if>
+
+            <if test="expireDate!= null  ">
+                and   expire_date  &gt;=  #{expireDate}
+            </if>
+
+
+        </trim>
+        Order By signed_date Desc
+    </select>
+
+    <!-- 查询到期合同信息-->
+    <select id="contractlistByexpire" parameterType="com.erp.entity.personnel.Contract" resultType="com.erp.entity.personnel.Contract">
+        select * from jr_contract
+        <trim prefix="where" prefixOverrides="and" >
+
+            <if test="name!= null and name!=''">
+                and name=#{name}
+            </if>
+
+            <if test="expireDate!= null  ">
+                and   expire_date  &lt;=  #{expireDate}
+            </if>
+
+        </trim>
+        Order By signed_date Desc
+    </select>
+
+
+</mapper>

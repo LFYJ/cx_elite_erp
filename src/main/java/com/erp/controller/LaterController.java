@@ -5,18 +5,22 @@ package com.erp.controller;
 import com.erp.common.ExecuteResultState;
 import com.erp.common.JsonResult;
 import com.erp.config.IdGenerator;
-import com.erp.entity.User;
-import com.erp.service.UserService;
-import com.erp.service.impl.RedisUtils;
+import com.erp.entity.personnel.User;
+import com.erp.service.personnel.UserService;
+import com.erp.service.RedisUtils;
+
+import com.erp.util.DesUtil;
 import com.erp.util.Jwutil;
 import com.erp.util.SendMessageUtil;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -25,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Controller
-@RequestMapping(value = "/later")
+/*@RequestMapping(value = "/later")*/
 public class LaterController {
     //id 生成策略
     @Resource
@@ -41,12 +45,12 @@ public class LaterController {
 
 
     //获取短信验证码信息
-    @RequestMapping(value = "/short/message",method = RequestMethod.POST)
+    @RequestMapping(value = "/later/short/message",method = RequestMethod.POST)
     @ResponseBody
     public JsonResult goShortMessage( @RequestParam("phone") String phone){
 
         //验证手机号是否已存在
-        User user=userService.selectByUser(new User().setPhone(phone));
+        User user=userService.selectByUser(new User().setPhone(phone).setUserState(1));
         if(user!=null){
 
             String yanzhengam = SendMessageUtil.getRandomCode(6);
@@ -70,16 +74,26 @@ public class LaterController {
     }
 
     //验证手机短信登录
-    @RequestMapping(value = "/login/message",method = RequestMethod.POST)
+    @RequestMapping(value = "/later/login/message",method = RequestMethod.POST)
     @ResponseBody
     public JsonResult isShortMessage( @RequestParam("phone") String phone,
-                                      @RequestParam("verify") String verify){
+                                      @RequestParam("verify") String verify,
+                                      HttpServletRequest httpServletRequest){
 
-        //验证手机号登录
-        if (verify.equals(redisUtils.get(phone))){
-            return new JsonResult( true, ExecuteResultState.SUCCEED,"成功");
+        //验证手机号是否已存在
+        User user=userService.selectByUser(new User().setPhone(phone).setUserState(1));
+        if(user!=null){
+            //redis验证手机号登录
+            if (verify.equals(redisUtils.get(phone))){
+                HttpSession session = httpServletRequest.getSession();
+                session.setAttribute("user",user);
+
+                redisUtils.set(user.getUserId().toString(),Jwutil.getIP(httpServletRequest));
+
+                return new JsonResult( true, ExecuteResultState.SUCCEED,"成功");
+            }
         }
-        return new JsonResult( false, ExecuteResultState.FAILURE,"验证码错误");
+        return new JsonResult( false, ExecuteResultState.FAILURE,"验证码或手机号错误");
 
     }
 
@@ -90,7 +104,7 @@ public class LaterController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/later/login",method = RequestMethod.POST)
     @ResponseBody
     public JsonResult login(@RequestParam("username") String username ,
                             @RequestParam("password") String password,
@@ -98,16 +112,19 @@ public class LaterController {
         //redisUtils.set("time","测试缓存失效时间",10L, TimeUnit.MINUTES);
 
         User user= userService.selectByUser(
-                new User().setPassword(Jwutil.stringToMD5(password)).setJobNumber(
-                        Long.parseLong(username)));
+                new User().setPassword(DesUtil.getEncryptString(password)).setJobNumber(
+                        Long.parseLong(username)).setUserState(1));
 
         if(user!=null){
             //储存到session
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute("user",user);
+            redisUtils.set(user.getUserId().toString(),Jwutil.getIP(httpServletRequest));
+
+
             return new JsonResult( false, ExecuteResultState.SUCCEED,"成功");
         }
-        return new JsonResult( false, ExecuteResultState.FAILURE,"失败");
+        return new JsonResult( false, ExecuteResultState.FAILURE,"用户名密码错误");
 
     }
 
@@ -116,24 +133,30 @@ public class LaterController {
      * 跳转到主页
      * @return
      */
-    @RequestMapping(value = "/goindex",method = RequestMethod.GET)
-    public String welcome(){
+    @RequestMapping(value = "/later/goindex",method = RequestMethod.GET)
+    public String index(){
         return  "/index";
     }
 
     /**
-     * 跳转到主页
+     * main
      * @return
      */
-    @RequestMapping("/backups")
-    public String backups(){
-        return  "/prototype/backups";
+    @RequestMapping(value = "/later/welcome",method = RequestMethod.GET)
+    public String welcome(){
+
+        return  "/welcome";
     }
+
+
+
+
+
     /**
      * 跳转到人员列表
      * @return
      */
-    @RequestMapping("/staff/list")
+    @RequestMapping("/later/staff/list")
     public String stafflist(){
         return  "/staff/staff_list";
     }
@@ -141,5 +164,16 @@ public class LaterController {
 
 
 
+    /**
+     * 人事主页加载
+     * @return
+     */
+    @RequestMapping(value = "/later/renshi/main",method = RequestMethod.GET)
+    public String renshimain(Model model){
+
+        List<User> userlist =userService.usermain();
+        model.addAttribute("userlist",userlist );
+        return  "/personnel/renshi_main";
+    }
 
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.SalaryChangeDao">
+
+
+
+
+
+
+    <!-- 查询薪资变动-->
+    <select id="salarychangelist" parameterType="com.erp.entity.personnel.SalaryChange" resultType="com.erp.entity.personnel.SalaryChange">
+        select * from jr_salary_change
+
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="id!=null and id!=''">
+                id=#{id}
+            </if>
+            <if test=" username!=null and username!=''">
+                and  username=#{username}
+            </if>
+            <if test=" type!=null and type!=''">
+                and  type=#{type}
+            </if>
+        </trim>
+        Order By createdate Desc
+    </select>
+
+
+
+
+
+    <!--删除薪资变动-->
+    <delete id="salarychangedelete" parameterType="java.lang.Long">
+     delete from jr_salary_change where id=#{id}
+    </delete>
+
+
+    <insert id="salarychangeadd" parameterType="com.erp.entity.personnel.SalaryChange">
+        insert into jr_salary_change
+        VALUES ( #{id},#{userId},#{username},#{gender},
+        #{departmentName},#{positionName},#{entryTime},#{adjustmentdata},
+        #{createdate},#{state},#{type})
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.RewardPunishDao">
+
+
+
+
+    <!-- 查询奖罚记录-->
+    <select id="rewardpunishlist" parameterType="com.erp.entity.personnel.RewardPunish" resultType="com.erp.entity.personnel.RewardPunish">
+        select * from jr_reward_punish
+
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="id!=null and id!=''">
+                id=#{id}
+            </if>
+            <if test=" username!=null and username!=''">
+                and  username=#{username}
+            </if>
+            <if test=" type!=null and type!=''">
+                and  type=#{type}
+            </if>
+        </trim>
+        Order By createdate DESC
+    </select>
+
+
+    <!--删除奖罚记录-->
+    <delete id="rewardpunishdelete" parameterType="java.lang.Long">
+     delete from jr_reward_punish where id=#{id}
+    </delete>
+
+
+    <!--添加奖罚记录-->
+    <insert id="rewardpunishadd" parameterType="com.erp.entity.personnel.RewardPunish">
+        insert into jr_reward_punish
+        VALUES ( #{id},#{userId},#{username},#{departmentName},
+        #{positionName},#{magnitude},#{explain},#{type},#{createdate})
+    </insert>
+
+
+</mapper>

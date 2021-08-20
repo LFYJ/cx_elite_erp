@@ -45,6 +45,7 @@ public class ServerConfig implements ApplicationListener<WebServerInitializedEve
 
     @Override
     public void onApplicationEvent(WebServerInitializedEvent event) {
+
         serverPort = event.getWebServer().getPort();
     }
 }

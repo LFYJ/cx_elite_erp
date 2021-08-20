@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>合同管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" th:href="@{/static/css/font.css}">
+    <link rel="stylesheet" th:href="@{/static/css/index.css}">
+    <script th:src="@{/static/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/static/js/index.js}"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">首页</a>
+
+          </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       onclick="location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <form class="layui-form layui-col-space5">
+
+
+
+                        <div class="layui-inline layui-show-xs-block">
+                            状态：
+                            <div class="layui-input-inline">
+
+                                <select id="statetype" lay-filter="stateType" name="state">
+                                    <option value="0" selected="selected">全部</option>
+                                    <option value="1" >未到期</option>
+                                    <option value="2" >到期</option>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        开始时间：
+                        <div class="layui-input-inline">
+                            <input type="text"   name="signedDate"
+                                   th:value="${signedDate}"   placeholder="格式：yyyy-MM-dd"  class="layui-input starttime">
+
+                        </div>
+
+                        截止时间：
+                        <div class="layui-input-inline">
+                            <input type="text"   name="expireDate"
+                                   th:value="${expireDate}"     placeholder="格式：yyyy-MM-dd"  class="layui-input starttime">
+
+                        </div>
+
+
+                        姓名：
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" name="name"  autocomplete="off"
+                                       th:value="${name}" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="sousuo"><i
+                                    class="layui-icon">&#xe615;</i></button>
+                        </div>
+
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="sreach">重置</button>
+                        </div>
+
+
+                        <div class="layui-inline layui-show-xs-block">
+                            <a class="layui-btn" href="javascript:;"
+                               onclick="xadmin.open('添加合同','/later/contract/goadd',730,300)"><i
+                                    class="layui-icon"></i>添加合同</a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <div class="layui-card-body ">
+                    <table class="layui-table layui-form">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>工号</th>
+                            <th>姓名</th>
+                            <th>签订日期</th>
+                            <th>到期时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="contrac,picStart:${contractList}">
+                            <td th:text="${picStart.count+(pageInfo.pageNum-1)*pageInfo.pageSize}"> 1</td>
+
+                            <!--工号-->
+                            <td th:text="${contrac.wno}"></td>
+
+                            <!--姓名-->
+                            <td th:text="${contrac.name}"></td>
+
+
+                            <!--签订日期-->
+                            <td><span th:text="${#dates.format(contrac.signedDate, 'yyyy-MM-dd')}">4564546</span></td>
+                            <!--到期时间-->
+                            <td><span th:text="${#dates.format(contrac.expireDate, 'yyyy-MM-dd')}">4564546</span></td>
+
+
+
+                            <td><span class="state" th:text="${#dates.format(contrac.expireDate, 'yyyy-MM-dd')}">4564546</span></td>
+
+
+                            <td class="td-manage">
+                                <a title="删除" th:onclick="'javascript:member_del(this,'+${contrac.id}+')'"
+                                   href="javascript:;">
+                                    <i class="layui-icon">&#xe640;</i>
+                                </a>
+
+
+                                <a title="编辑" th:onclick="'javascript:redact_up('+${contrac.id}+')'"
+                                   href="javascript:;">
+                                    <i class="layui-icon">&#xe642;</i>
+                                </a>
+
+
+                            </td>
+
+
+
+
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                    <!-- layUI 分页模块 -->
+                    <div id="pages" style="text-align: center;"></div>
+                </div>
+                <!-- 数据存放-->
+
+                <input type="hidden" id="name" th:value="${name}"/>
+                <input type="hidden" id="state" th:value="${state}"/>
+                <input type="hidden" id="signedDate" th:value="${signedDate}"/>
+                <input type="hidden" id="expireDate" th:value="${expireDate}"/>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    $(function(){
+        $("#statetype option[value='"+$("#state").val()+"']").attr("selected", true);
+
+    });
+
+    $(function(){
+        $(".state").each(function() {
+
+            if(getDate($(this).text())>new Date){
+                $(this).text("未到期");
+
+            }else {
+                $(this).text("已到期");
+                $(this).css("color", "red");
+
+            }
+
+
+        });
+    });
+
+    function getDate(dateStr) {
+        var ps = dateStr.split(" ");
+        var pd = ps[0].split("-");
+        var pt = ps.length > 1 ? ps[1].split(":") : [0, 0, 0];
+        return new Date(pd[0], pd[1] - 1, pd[2], pt[0], pt[1], pt[2]);
+    }
+
+
+
+        layui.use(['laypage', 'layer', "element", "form","laydate"], function () {
+        var laypage = layui.laypage,
+            form = layui.form,
+            layer = layui.layer;
+
+            var laydate = layui.laydate;
+
+            //日期同时绑定多个
+            lay('.starttime').each(function(){
+                laydate.render({
+                    elem: this
+                    ,trigger: 'click'
+                });
+            })
+
+
+
+
+        //总页数大于页码总数
+        laypage.render({
+            elem: 'pages'
+            , count: [[${pageInfo.total}]]   //数据总数
+            , limit: 10                   //每页显示条数
+            , limits: [10]
+            , curr: [[${pageInfo.pageNum}]]                        //起始页
+            //, groups: 5                      //连续页码个数
+            , prev: '上一页'                 //上一页文本
+            , netx: '下一页'                 //下一页文本
+            , first: 1                      //首页文本
+            , last: [[${pageInfo.pages}]]                      //尾页文本
+            , layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+            , jump: function (obj, first) { //obj为当前页的属性和方法，第一次加载first为true
+                //跳转页码时调
+                //         do something
+                if (!first) {
+                    //非首次加载 do something
+                    window.location.href = "/later/contract/list?page=" + obj.curr
+                        + "&&pageSize=" + obj.limit
+                       +"&&name="+$("#name").val()
+                      +"&&signedDate="+$("#signedDate").val()
+                      +"&&expireDate="+$("#expireDate").val()
+                    +"&&state="+$("#state").val();
+                }
+            }
+        });
+
+        form.on('submit(sousuo)', function (data) {
+
+            window.location.href = "/later/contract/list?name="
+                + data.field.name
+                +"&&signedDate="+data.field.signedDate
+                +"&&expireDate="+data.field.expireDate
+                +"&&state="+$("#state").val();
+            return false;
+        });
+
+
+            form.on('select(stateType)', function (data) {
+                window.location.href = "/later/contract/list?state="
+                    + data.value
+                    +"&&name="+$("#name").val();
+            });
+
+
+
+
+
+    });
+
+
+
+    /*删除调动记录*/
+    function member_del(obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            $.ajax({
+                type: "post",
+                url: "/later/contract/delete",
+                data: {"id": id},
+                success: function (data) {
+                    if (data.state === 200) {
+
+                        window.location.href = "/later/contract/list?page=" + [[${pageInfo.pageNum}]]
+                            + "&&pageSize=" + [[${pageInfo.pageSize}]]
+                            +"&&name="+$("#name").val();
+                    }
+                    $(obj).parents("tr").remove();
+                    layer.msg(data.msg, {icon: 1, time: 1000});
+                }
+            });
+
+
+        });
+    }
+
+
+    function redact_up(id) {
+        xadmin.open("查看", "/later/contract/goupt?id=" + id, 730, 600);
+    }
+
+
+
+
+
+</script>
+
+</html>

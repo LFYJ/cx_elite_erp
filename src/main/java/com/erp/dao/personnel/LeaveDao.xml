@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.LeaveDao">
+
+
+
+    <!-- 查询所有请假信息-->
+    <select id="selectByListLeave" parameterType="java.util.Map" resultType="com.erp.entity.personnel.Leave">
+        select * from jr_leave
+        <trim prefix="where" prefixOverrides="and" >
+
+        <if test="nf!= null and nf!=''and yf!= null and yf!=''">
+            YEAR(begin_date)=#{nf} AND MONTH(begin_date)=#{yf}
+        </if>
+
+         <if test="username!= null and username">
+           and user_name=#{username}
+         </if>
+        </trim>
+        Order By creation_time Desc
+    </select>
+
+
+
+    <!-- 查询请假详情信息-->
+    <select id="selectByLeave" parameterType="com.erp.entity.personnel.Leave" resultType="com.erp.entity.personnel.Leave">
+        select * from jr_leave  Order By creation_time Desc
+    </select>
+
+
+
+</mapper>

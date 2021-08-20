@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>岗位异动添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" th:href="@{/static/css/font.css}">
+    <link rel="stylesheet" th:href="@{/static/css/index.css}">
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/static/js/index.js}"></script>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form">
+
+
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>请输工号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  id="wno" name="wno" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>姓名
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="username"  name="username" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+            <div class="layui-form-item">
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>出生日期
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  id="birthdate" name="birthdate" required=""
+                           lay-verify="required" placeholder="格式：yyyy-MM-dd"
+                           autocomplete="off" class="layui-input starttime">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>联系人电话
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="phone" name="phone" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+            <div class="layui-form-item">
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>原部门
+                </label>
+
+                <div class="layui-input-inline">
+                    <input type="text"  id="departmentName" name="departmentName" required=""
+                           autocomplete="off" class="layui-input">
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>原职位
+                </label>
+
+                <div class="layui-input-inline">
+                    <input type="text" id="positionName" name="positionName" required=""
+                           autocomplete="off" class="layui-input">
+
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="layui-form-item">
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>原职务
+                </label>
+
+                <div class="layui-input-inline">
+                    <input type="text"  id="groupingName" name="groupingName" required=""
+                           autocomplete="off" class="layui-input">
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+            </div>
+
+
+
+            <div class="layui-form-item">
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>身份证号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="identityArd"  name="identityArd" required=""
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>生效日期
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  id="transferData" name="transferData" required=""
+                           lay-verify="required" placeholder="格式：yyyy-MM-dd"
+                           autocomplete="off" class="layui-input starttime">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+            </div>
+
+
+
+            <div class="layui-form-item">
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>调至部门
+                </label>
+
+                <div class="layui-input-inline">
+                    <select id="toDepartmentId" lay-filter="brickType" name="toDepartmentId">
+
+                        <option value="0"  selected="selected">请选择部门</option>
+
+                        <option th:each="department:${listDepartment}" th:value="${department.departmentId}">[[${department.departmentName}]]</option>
+
+                    </select>
+
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>调至岗位
+                </label>
+
+                <div class="layui-input-inline">
+                    <select    name="toPositionId" lay-verify=""  id="toPositionId">
+
+                        <option value="0"  selected="selected">请选择职位</option>
+                        <option th:each="position:${listPosition}" th:value="${position.positionId}">[[${position.jobTitle}]]</option>
+
+                    </select>
+                </div>
+
+
+
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="layui-form-item">
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>调至职务
+                </label>
+
+                <div class="layui-input-inline">
+
+                    <select id="toGroupingId"  name="toGroupingId">
+                        <option value="0"  selected="selected">请选择职务</option>
+                        <option th:each="grouping:${listGrouping}" th:value="${grouping.groupingId}">[[${grouping.groupingName}]]</option>
+
+                    </select>
+
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+            </div>
+
+
+
+            <div class="layui-form-item">
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>性别
+                </label>
+
+                <div class="layui-input-inline">
+                    <input type="radio" name="gender" value="男" title="男"  checked lay-filter="ChoiceRadio">
+                    <input type="radio" name="gender" value="女" title="女"  lay-filter="ChoiceRadio">
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>类型
+                </label>
+
+                <div class="layui-input-inline">
+                    <select id="type"  name="type">
+
+                        <option value="0"  selected="selected">请选择</option>
+                        <option value="1"  >晋升</option>
+                        <option value="2"  >降级</option>
+                        <option value="3"  >岗位调动</option>
+
+                    </select>
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="layui-form-item" style="margin-left: 9%">
+
+                <button  class="layui-btn" lay-filter="add" lay-submit="">
+                    增加
+                </button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    layui.use(['form', 'upload','layer','laydate'],
+        function() {
+            $ = layui.jquery;
+            var form = layui.form,
+                layer = layui.layer;
+            var upload = layui.upload;
+
+            var laydate = layui.laydate;
+
+            //日期同时绑定多个
+            lay('.starttime').each(function(){
+                laydate.render({
+                    elem: this
+                    ,trigger: 'click'
+                });
+            })
+
+
+
+
+
+
+
+
+
+
+            //自定义验证规则
+            form.verify({
+                nikename: function(value) {
+                    if (value.length < 5) {
+                        return '昵称至少得5个字符啊';
+                    }
+                },
+                pass: [/(.+){6,12}$/, '密码必须6到12位'],
+                repass: function(value) {
+                    if ($('#L_pass').val() != $('#L_repass').val()) {
+                        return '两次密码不一致';
+                    }
+                }
+            });
+
+            //监听提交
+            form.on('submit(add)',
+                function(data) {
+
+                    var mobility =  {"wno": data.field.wno,
+                        "username": data.field.username,
+                        "gender": data.field.gender,
+                        "birthdate": data.field.birthdate,
+                        "phone": data.field.phone,
+                        "identityArd": data.field.identityArd,
+                        "toDepartmentId": data.field.toDepartmentId,
+                        "toPositionId": data.field.toPositionId,
+                        "transferData": data.field.transferData,
+                        "type": data.field.type,
+                        "toGroupingId":data.field.toGroupingId,
+
+                    }
+
+
+
+                    /* 添加移动记录*/
+
+                    $.ajax({
+                        type: "post",
+                        url: "/later/personnel/transfer/add",
+                        //contentType: 'application/json;charset=utf-8',
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(mobility),//将json对象转化为json字符串
+
+                        success: function (data) {
+                            if (data.state === 200) {
+                                layer.alert(data.msg, {
+                                        icon: 6
+                                    },
+                                    function() {
+                                        //关闭当前frame
+                                        xadmin.close();
+                                        // 可以对父窗口进行刷新
+                                        xadmin.father_reload();
+                                    });
+                            }
+
+                        }
+                    });
+
+
+                    return false;
+                });
+
+
+
+
+
+
+
+            $("#wno").click(function(){
+                var  content="  <table  id='userall' class=\"layui-table layui-form\">\n" +
+                    "                        <thead>\n" +
+                    "                        <tr>\n" +
+                    "                            <th>序号</th>\n" +
+                    "                            <th>工号</th>\n" +
+                    "                            <th>姓名</th>\n" +
+                    "                            <th>部门</th>\n" +
+                    "                            <th>职位</th>\n" +
+                    "                            <th>性别</th>\n" +
+                    "                        </thead>\n" +
+                    "                        <tbody>";
+                $.ajax({
+                    type: "post",
+                    url: "/later/user/all",
+                    data:{state:1},
+                    success: function (data) {
+                        for (var i=0;i<data.data.length;i++)
+                        {
+                            content+="<tr >\n" +
+                                "                                <td >"+ parseInt(i+1)+"</td>\n" +
+                                "                                <td >"+data.data[i].jobNumber+"</td>\n" +
+                                "                                <td >"+data.data[i].userName+"</td>\n" +
+                                "                                <td >"+data.data[i].department.departmentName+"</td>\n" +
+                                "                                <td>"+data.data[i].position.jobTitle+"</td>\n" +
+                                "                                <td >"+data.data[i].gender+"</td>\n" +
+                                "                            </td>\n" +
+                                "                            </tr>"
+                        }
+
+                        content+="\n" +
+                            "                        </tbody>\n" +
+                            "                    </table>"
+
+                        //触发事件
+                        parent.layer.open({
+                            type: 1,
+                            title: '用户列表',
+                            area : ['850px' , '450px'],
+                            content: content,
+
+                        });
+
+                        parent.$('#userall').on('dblclick','tr', function() {
+
+                            $.ajax({
+                                type: "post",
+                                url: "/later/receive/selbydepartmentr",
+                                data: {'wno':$(this).children('td').eq(1).text()},
+                                success: function (data) {
+                                    console.log(data);
+                                    if (data.state === 200) {
+                                        $("#wno").val(data.data.jobNumber);
+                                        $("#username").val(data.data.userName);
+                                        $("#phone").val(data.data.phone);
+                                        $("#identityArd").val(data.data.identityArd);
+                                        $("#departmentName").val(data.data.department.departmentName);
+                                        $("#positionName").val(data.data.position.jobTitle);
+                                        $("#groupingName").val(data.data.grouping.groupingName);
+
+
+                                        let ary =data.data.birthdate.split("T", 1);
+
+                                        $("#birthdate").val(ary);
+                                        console.log(ary)
+
+                                        if(data.data.gender=='男')
+                                        {
+                                            $("input[name=gender][value=男]").prop("checked","true");
+                                            console.log('男')
+                                        }else {
+                                            $("input[name=gender][value=女]").prop("checked","true");
+                                            console.log('女')
+                                        }
+
+                                        form.render();
+
+                                    }else {
+                                        $("#supervisor").val('');;
+
+                                    }
+
+                                }
+                            });
+
+                            parent.layer.close(parent.layer.index)
+
+                        });
+
+                    }
+                });
+
+
+
+
+            });
+
+
+
+
+        });</script>
+
+</body>
+
+</html>

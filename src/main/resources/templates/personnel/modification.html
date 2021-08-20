@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>入职添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" th:href="@{/static/css/font.css}">
+    <link rel="stylesheet" th:href="@{/static/css/index.css}">
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/static/js/index.js}"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form">
+            <div class="layui-form-item">
+
+                <div style="width: 50%; float: left">
+                    <div>
+                        <label for="username" class="layui-form-label">
+                           姓名:
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="username" name="userName" required="" lay-verify="required"
+                                     th:value="${user.userName}"   autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15%">
+                        <label for="phone" class="layui-form-label">
+                            手机号：
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="phone" name="phone" required="" lay-verify="phone"
+                                    th:value="${user.phone}"   autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30%">
+                        <label for="L_email" class="layui-form-label">
+                           学历
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="L_email" name="education" required="" lay-verify="required"
+                                     th:value="${user.education}"      autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 45%">
+                        <label for="L_email" class="layui-form-label">
+                           年龄
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text"  name="age" required="" lay-verify="required"
+                                   th:value="${user.age}"   autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div  style="width: 50%; float: left">
+
+
+                    <div class="layui-form-item">
+                        <div class="layui-upload" style="margin-left: 59px;">
+
+                            <div class="layui-upload-list" id="img"
+                                 style="margin-top: 10%;width: 107px;height: 127px; border: 1px solid #c2c2c2;margin-left: 14%;">
+
+                            <img th:src="${user.userImg}"  style="width: 107px;height: 127px; "  class="layui-upload-img" id="demo1">
+                                <p id="demoText"></p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                   毕业院校
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="schoolBy" required="" lay-verify="required"
+                             th:value="${user.schoolBy}"      autocomplete="off" class="layui-input">
+                </div>
+
+
+                <label for="L_email" class="layui-form-label">
+                  身份证
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="identityArd" required="" lay-verify="required"
+                            th:value="${user.identityArd}"     autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                    <span class="x-red">*</span>紧急联系人
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="emergencyUser" required="" lay-verify="required"
+                            th:value="${user.emergencyUser}"     autocomplete="off" class="layui-input">
+                </div>
+
+
+
+                <label for="L_email" class="layui-form-label">
+                   联系人电话
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="emergencyPhone" required="" lay-verify="required"
+                            th:value="${user.emergencyPhone}"   autocomplete="off" class="layui-input">
+                </div>
+
+
+
+            </div>
+
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                    工资账号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="bankCard" required=""
+                           th:value="${user.bankCard}"      autocomplete="off" class="layui-input">
+                </div>
+
+                <label for="L_email" class="layui-form-label">
+                    工资开户行
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="bank" required="" lay-verify="required"
+                           th:value="${user.bank}"  autocomplete="off" class="layui-input">
+                </div>
+
+            </div>
+
+
+            <div class="layui-form-item">
+                <label  class="layui-form-label">
+                    孝善账号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="filialityFineCard"
+                           th:value="${user.filialityFineCard}"   autocomplete="off" class="layui-input">
+                </div>
+
+                <label  class="layui-form-label">
+                    孝善开户行
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="filialityFineBank"  lay-verify="required"
+                           th:value="${user.filialityFineBank}"   autocomplete="off" class="layui-input">
+                </div>
+
+            </div>
+
+
+
+            <div class="layui-form-item">
+
+                <label for="L_email" class="layui-form-label">
+                    现住址
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="presentAddress" required="" lay-verify="required"
+                           th:value="${user.presentAddress}"     autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+                <label for="L_email" class="layui-form-label">
+                    专业
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="specialty" required="" lay-verify="required"
+                           th:value="${user.specialty}"  autocomplete="off" class="layui-input">
+                </div>
+
+
+            </div>
+
+
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                    户籍地址
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="address" required="" lay-verify="required"
+                            th:value="${user.address}"    autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+                <label for="L_email" class="layui-form-label">
+                   民族
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="nation" required=""
+                            th:value="${user.nation}"     autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+            <div class="layui-form-item">
+
+                <label for="L_email" class="layui-form-label">
+                    部门
+                </label>
+
+                <div class="layui-input-inline">
+                    <select   id="departmentId" lay-filter="brickType" name="departmentId">
+
+                        <option value="0"  selected="selected">请选择部门</option>
+
+                        <option th:each="department:${listDepartment}" th:value="${department.departmentId}">[[${department.departmentName}]]</option>
+
+                    </select>
+
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+                <label for="L_email" class="layui-form-label">
+                    职位
+                </label>
+
+                <div class="layui-input-inline">
+                    <select    name="positionId" lay-verify=""  id="positionId">
+
+                        <option value="0"  selected="selected">请选择职位</option>
+                        <option th:each="position:${listPosition}" th:value="${position.positionId}">[[${position.jobTitle}]]</option>
+
+                    </select>
+
+                </div>
+
+
+
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+            <div class="layui-form-item">
+
+                <label for="L_email" class="layui-form-label">
+                   转正日期
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  id="positiveDates" name="positiveDates"
+                           th:value="${#dates.format(user.positiveDates, 'yyyy-MM-dd')}"   placeholder="格式：yyyy-MM-dd"  class="layui-input starttime">
+
+                </div>
+
+
+
+
+                <label for="L_email" class="layui-form-label">
+                   职务
+                </label>
+
+                <div class="layui-input-inline">
+                    <select id="projectTeam"  name="projectTeam">
+                        <option value="0"  selected="selected">请选择职务</option>
+                        <option th:each="grouping:${listGrouping}" th:value="${grouping.groupingId}">[[${grouping.groupingName}]]</option>
+
+                    </select>
+
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                    出生日期
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"   id="birthdate" name="birthdate" required="" placeholder="格式：yyyy-MM-dd"
+                           th:value="${#dates.format(user.birthdate, 'yyyy-MM-dd')}"  autocomplete="off" class="layui-input starttime">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+                <label for="L_email" class="layui-form-label">
+                    入职日期
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  id="entryDate"  name="entryDate" required="" placeholder="格式：yyyy-MM-dd"
+                           th:value="${#dates.format(user.entryDate, 'yyyy-MM-dd')}"   autocomplete="off" class="layui-input starttime">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                    状态
+                </label>
+                <div class="layui-input-inline">
+                    <select id="userState" name="userState">
+
+                        <option value="0" selected="selected">请选择</option>
+
+                        <option value="1">在职 </option>
+                        <option value="2">离职 </option>
+                        <option value="3">休假 </option>
+
+                    </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+                <label for="L_email" class="layui-form-label">
+                   离职日期
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text"  id="dimissionDate" name="dimissionDate"  placeholder="格式：yyyy-MM-dd"
+                           th:value="${#dates.format(user.dimissionDate, 'yyyy-MM-dd')}"   class="layui-input starttime">
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">社保缴纳情况</label>
+                <div class="layui-input-block" id="socialSecurity"> </div>
+
+            </div>
+
+
+
+
+            <div class="layui-form-item">
+                <label for="L_email" class="layui-form-label">
+                    性别
+                </label>
+
+                <div class="layui-input-inline">
+                    <input name="gender" value="男" type="radio" title="男"  checked="">
+                    <input name="gender" value="女" type="radio" title="女"  >
+
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+
+                <label for="L_email" class="layui-form-label">
+                   婚姻
+                </label>
+
+                <div class="layui-input-inline">
+
+                    <input name="marriage" value="是" title="是" type="radio"  checked="">
+                    <input name="marriage" value="否" title="否" type="radio" >
+
+
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>
+                </div>
+
+
+            </div>
+
+            <div class="layui-form-item">
+
+                <label for="L_email" class="layui-form-label">
+                   户口类型
+                </label>
+
+                <div class="layui-input-inline">
+                    <input  name="hukouType" value="农村" title="农村" type="radio"  checked="">
+                    <input  name="hukouType" value="城市" title="城市" type="radio" >
+                </div>
+
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red"> * </span>
+                </div>
+
+
+
+            </div>
+
+
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="x-red">*</span>系统权限</label>
+                <div class="layui-input-block">
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="renshi"   value="personnel"      lay-skin="primary"  title="人事系统" >
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="caiwu"    value="finance"      l  lay-skin="primary" title="财务系统">
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="xiaoshou" value="market"         lay-skin="primary"  title="销售系统" >
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="cangchu"  value="storage"        lay-skin="primary"  title="仓储系统" >
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="shengchan"value="production"      lay-skin="primary" title="生产系统">
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="jishu"    value="technology"     lay-skin="primary"  title="技术系统" >
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="guanli"   value="manage"         lay-skin="primary"  title="管理系统" >
+                    <input type="checkbox"  name="csdn" lay-filter="like" id="bianji"   value="administrative"   lay-skin="primary" title="编辑人员">
+
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+
+                <label for="L_email" class="layui-form-label">
+                 教育经历
+                </label>
+
+                <div class="layui-input-inline">
+                    <textarea rows="6" cols="60" name="educationUndergo"> [[${user.educationUndergo}]]  </textarea>
+                </div>
+
+            </div>
+
+
+
+            <div class="layui-form-item">
+
+                <label for="L_email" class="layui-form-label">
+                  工作经历
+                </label>
+
+                <div class="layui-input-inline">
+                    <textarea rows="6" cols="60" name="occupational"> [[${user.occupational}]]  </textarea>
+                </div>
+
+            </div>
+
+
+
+            <div class="layui-form-item" style="margin-left: 9%">
+
+                <button  class="layui-btn" lay-filter="add" lay-submit="">
+                    更新
+                </button>
+
+            </div>
+
+            <!-- 数据存放-->
+            <input type="hidden" id="gender" th:value="${user.gender}"/>
+            <input type="hidden" id="marriage" th:value="${user.marriage}"/>
+            <input type="hidden" id="hukouType" th:value="${user.hukouType}"/>
+            <input type="hidden" id="userId" th:value="${user.userId}"/>
+            <input type="hidden" id="authority" th:value="${authorityName}"/>
+            <input type="hidden" id="shebao" th:value="${user.socialSecurity}"/>
+
+
+        </form>
+
+
+
+    </div>
+</div>
+
+
+
+<script>
+
+    layui.use(['form', 'upload','layer','laydate'],
+        function() {
+            $ = layui.jquery;
+            var form = layui.form,
+                layer = layui.layer;
+            var upload = layui.upload;
+
+            var laydate = layui.laydate;
+
+            //日期同时绑定多个
+            lay('.starttime').each(function(){
+                laydate.render({
+                    elem: this
+                    ,trigger: 'click'
+                });
+            })
+
+
+
+
+
+            layer.ready(function(){
+
+                if($("#gender").val()=='男')
+                {
+                    $("input[name=gender][value=男]").prop("checked","true");
+                }else {
+                    $("input[name=gender][value=女]").prop("checked","true");
+                }
+
+                if($("#marriage").val()=='是')
+                {
+                    $("input[name=marriage][value=是]").prop("checked","true");
+                }else {
+                    $("input[name=marriage][value=否]").prop("checked","true");
+                }
+
+                if($("#hukouType").val()=='农村')
+                {
+                    $("input[name=hukouType][value=农村]").prop("checked","true");
+                }else {
+                    $("input[name=hukouType][value=城市]").prop("checked","true");
+                }
+
+
+
+                $("#departmentId").val([[${user.departmentId}]]);
+
+                $("#userState").val([[${user.userState}]]);
+
+                $("#positionId").val([[${user.positionId}]]);
+                $("#projectTeam").val([[${user.projectTeam}]]);
+
+
+
+                var str= $('#authority').val();
+
+                if(str!=''&&str!=null){
+                    $(str.split(",")).each(function (i,dom){
+                        $(":checkbox[value='"+dom+"']").prop("checked",true);
+
+                    });
+                }
+
+
+                form.render();
+
+
+            });
+
+
+
+
+            var value = [];
+
+            $('input[name=elevel]:checked').each(function(){
+
+                //这里用所选复选框或运算后的值
+                value.push($(this).val());
+                console.log($(this).val())
+
+            });
+            //监听提交
+            form.on('submit(add)',
+                function(data) {
+                    var arr_box = [];
+                    $('input[type=checkbox]:checked').each(function() {
+                        arr_box.push($(this).val());
+                    });
+
+
+                    var map = {
+                            "userId":$("#userId").val(),
+                            "userName": data.field.userName,
+                            "departmentId": data.field.departmentId,
+                            "gender": data.field.gender,
+                            "positionId": data.field.positionId,
+                            "education": data.field.education,
+                            "identityArd": data.field.identityArd,
+                            "nation": data.field.nation,
+                            "phone": data.field.phone,
+                            "emergencyUser": data.field.emergencyUser,
+                            "emergencyPhone": data.field.emergencyPhone,
+                            "socialSecurity": data.field.socialSecurity,
+                            "bankCard": data.field.bankCard,
+                            "hukouType": data.field.hukouType,
+                            "presentAddress": data.field.presentAddress,
+                            "address": data.field.address,
+                            "schoolBy": data.field.schoolBy,
+                            "userImg": $("#demo1").attr("src"),
+                            "occupational": data.field.occupational,
+                            "marriage":data.field.marriage,
+                            "age":data.field.age,
+
+                            "entryDate":data.field.entryDate,
+                            "positiveDates":data.field.positiveDates,
+                            "dimissionDate":data.field.dimissionDate,
+                            "birthdate":data.field.birthdate,
+                            "userState":data.field.userState,
+                            "projectTeam":data.field.projectTeam,
+                            "educationUndergo":data.field.educationUndergo,
+                            "specialty":data.field.specialty,
+                            "bank":data.field.bank,
+                            "filialityFineCard":data.field.filialityFineCard,
+                            "filialityFineBank":data.field.filialityFineBank,
+
+                            "arrbox":arr_box.toString()
+                    }
+
+
+                    /* 更新人事信息*/
+                    $.ajax({
+                        type: "post",
+                        url: "/later/user/upd",
+                        //contentType: 'application/json;charset=utf-8',
+                        contentType: 'application/json;charset=utf-8',
+                        data: JSON.stringify(map),//将json对象转化为json字符串
+
+                        success: function (data) {
+                            if (data.state === 200) {
+                                layer.alert(data.msg, {
+                                        icon: 6
+                                    },
+                                    function() {
+                                        //关闭当前frame
+                                        xadmin.close();
+                                        // 可以对父窗口进行刷新
+                                        xadmin.father_reload();
+                                    });
+                            }
+
+                        }
+                    });
+
+
+                    return false;
+                });
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#img'
+                , url: '/later/employee/uploadfiles' //改成您自己的上传接口
+                , field: 'imgs'
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+
+                }
+                , done: function (res) {
+
+
+                    $('#demo1').attr('src', res.data.file); //图片链接（base64
+                    /*style="width: 100px;height: 100px;"*/
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+
+
+        });</script>
+
+
+
+<script>
+
+
+   var projectTeamid= $("#shebao").val();
+   var ehethe = [];
+
+   if(projectTeamid!=''&&projectTeamid!=null){
+       $(projectTeamid.split(",")).each(function (i,dom){
+          console.log(dom)
+           ehethe.push(dom);
+       });
+   }
+   console.log(ehethe)
+
+    var tagData = [
+        {"id":"暂不缴纳社保","name":"暂不缴纳社保","status":"暂不缴纳社保"},
+        {"id":"医疗保险","name":"医疗保险"},
+        {"id":"失业保险","name":"失业保险"},
+        {"id":"养老保险","name":"养老保险"},
+        {"id":"工伤保险","name":"工伤保险"},
+
+    ];
+
+    layui.config({
+        base : '../'
+    }).extend({
+        selectN: '../static/layui_extends/selectN',
+        selectM: '../static/layui_extends/selectM',
+    }).use(['layer','form','jquery','selectN','selectM'],function(){
+        $ = layui.jquery;
+        var form = layui.form
+            ,selectN = layui.selectN
+            ,selectM = layui.selectM;
+
+        //多选标签-所有配置
+        var tagIns2 = selectM({
+            //元素容器【必填】
+            elem: '#socialSecurity'
+
+            //候选数据【必填】
+            ,data: tagData
+
+            //默认值
+            ,selected: ehethe
+
+            //最多选中个数，默认5
+            ,max : 4
+
+            //input的name 不设置与选择器相同(去#.)
+            ,name: 'socialSecurity'
+
+            //值的分隔符
+            ,delimiter: ','
+
+            //候选项数据的键名
+            ,field: {idName:'id',titleName:'name'}
+
+
+        });
+
+
+
+        //监听重置按钮
+        $('form').find(':reset').click(function(){
+            $('form')[0].reset();
+
+            tagIns2.set();//默认值
+            return false;
+        });
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

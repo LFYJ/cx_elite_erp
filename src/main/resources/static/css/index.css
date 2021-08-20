@@ -11,7 +11,7 @@ a{
 html{
     width: 100%;
     height: 100%;
-    overflow-x:hidden; 
+    overflow-x:hidden;
     overflow-y:auto;
 }
 body{
@@ -211,11 +211,11 @@ body{
     /*background: #fff ;*/
 }
 .left-nav #nav li .opened .current{
-    
+
 }
 .left-nav #nav li .sub-menu li:hover{
     /*color: blue;*/
-     /*background: #fff ;*/
+    /*background: #fff ;*/
 }
 .left-nav #nav li .sub-menu li a{
     padding: 12px 15px 12px 30px;
@@ -318,7 +318,7 @@ body{
 .page-content .layui-tab-content .layui-tab-item{
     width: 100%;
     height: 100%;
-    
+
 }
 .page-content .layui-tab-content .layui-tab-item iframe{
     width: 100%;
@@ -406,8 +406,20 @@ table th, table td {
     overflow: hidden;
     display: none;
 }
-
-
+.staging1{
+    display: flex;
+    justify-content: space-around;
+}
+.staging2{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+.staging3{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
 @media screen and (max-width: 768px){
     .fast-add{
         display: none;
@@ -434,15 +446,30 @@ table th, table td {
         left: 60px;
     }
     .page-content .layui-tab-content .layui-tab-item{
-        -webkit-overflow-scrolling: touch; 
-        overflow-y: scroll; 
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
     }
     .x-so input.layui-input{
         width: 100%;
         margin: 10px;
     }
 }
-
+.shortcut{
+    width: 65%;
+}
+.dynamic{
+    width: 32.8%;
+    margin-left: 66%;
+}
+.datum{
+    width: 64%;
+    background-color: white;
+    margin-top: 248px;
+    margin-left: 8px;
+}
+.datum-header{
+    margin-top: -70px;
+}
 /*精细版样式*/
 
 .x-admin-sm{
@@ -491,7 +518,7 @@ table th, table td {
     font-size: 12px;
 }
 .x-admin-sm  .layui-breadcrumb>*{
-   font-size: 12px; 
+    font-size: 12px;
 }
 .x-admin-sm  .layui-btn,.x-admin-sm .layui-btn-xs,.x-admin-sm .layui-btn-sm{
     font-size: 12px;
@@ -542,7 +569,7 @@ table th, table td {
 
 .new-nav .news{
     width: 240px;
-   /* height: 300px;*/
+    /* height: 300px;*/
     position: absolute;
     right: -60px;
     top: 45px;

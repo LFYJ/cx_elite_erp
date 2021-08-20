@@ -2,42 +2,47 @@ package com.erp.util;
 
 
 
+import com.erp.service.RedisUtils;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.Date;
+
 
 
 public class Jwutil {
 
 
+    @Resource
+    private static RedisUtils redisUtils;
 
 
+    public static Date getBeginTime(int year, int month) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate localDate = yearMonth.atDay(1);
+        LocalDateTime startOfDay = localDate.atStartOfDay();
+        ZonedDateTime zonedDateTime = startOfDay.atZone(ZoneId.of("Asia/Shanghai"));
 
-
-
-    /**
-     * MD5加密
-     * @param plainText
-     * @return
-     */
-    public static String stringToMD5(String plainText) {
-        byte[] secretBytes = null;
-        try {
-            secretBytes = MessageDigest.getInstance("md5").digest(
-                    plainText.getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("没有这个md5算法！");
-        }
-        String md5code = new BigInteger(1, secretBytes).toString(16);
-        for (int i = 0; i < 32 - md5code.length(); i++) {
-            md5code = "0" + md5code;
-        }
-        return md5code;
+        return Date.from(zonedDateTime.toInstant());
     }
+
+    public static Date getEndTime(int year, int month) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+        LocalDateTime localDateTime = endOfMonth.atTime(23, 59, 59, 999);
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Shanghai"));
+        return Date.from(zonedDateTime.toInstant());
+    }
+
+
+
+
+
 
 
     /**
@@ -69,11 +74,30 @@ public class Jwutil {
         return fileDir;
     }
 
-    public static void main(String[] args) {
+    public static String getIP(HttpServletRequest request) {
+
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
 
 
-        System.out.println( stringToMD5("123456"));
+        System.out.println(ip +"    ip ");
+        return  ip;
     }
+
 
 
 

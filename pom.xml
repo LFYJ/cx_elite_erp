@@ -35,6 +35,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+        <!-- freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.28</version>
+        </dependency>
+
+
+
        <!-- mybatis-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -55,6 +66,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- jack-json -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+
 
         <!--分页 pagehelper -->
         <dependency>
@@ -142,6 +161,7 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.ftl</include>
                     <include>**/*.tld</include>
                 </includes>
                 <filtering>true</filtering>
@@ -151,6 +171,8 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.ftl</include>
+
                     <include>**/*.html</include>
                 </includes>
                 <filtering>true</filtering>

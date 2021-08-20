@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.UserDao">
+
+
+
+
+    <resultMap type="com.erp.entity.personnel.User" id="userResult1">
+        <id property="userId" column="user_id" />
+        <result property="jobNumber" column="job_number" />
+        <result property="userName" column="user_name" />
+        <result property="password" column="password" />
+        <result property="departmentId" column="department_id" />
+        <result property="gender" column="gender" />
+        <result property="positionId" column="position_id" />
+        <result property="education" column="education" />
+        <result property="identityArd" column="identity_ard" />
+        <result property="nation" column="nation" />
+        <result property="phone" column="phone" />
+        <result property="emergencyUser" column="emergency_user" />
+        <result property="emergencyPhone" column="emergency_phone" />
+        <result property="bankCard" column="bank_card" />
+        <result property="bank" column="bank" />
+        <result property="hukouType" column="hukou_type" />
+        <result property="presentAddress" column="present_address" />
+        <result property="address" column="address" />
+        <result property="schoolBy" column="school_by" />
+        <result property="marriage" column="marriage" />
+        <result property="userState" column="user_state" />
+        <result property="userImg" column="user_img" />
+        <result property="occupational" column="occupational" />
+        <result property="entryDate" column="entry_date" />
+        <result property="dimissionDate" column="dimission_date" />
+        <result property="age" column="age" />
+        <result property="birthdate" column="birthdate" />
+        <result property="positiveDates" column="positive_dates" />
+        <result property="specialty" column="specialty" />
+        <result property="educationUndergo" column="education_undergo" />
+        <result property="projectTeam" column="project_team" />
+        <result property="socialSecurity" column="social_security" />
+        <result property="filialityFineCard" column="filiality_fine_card" />
+        <result property="filialityFineBank" column="filiality_fine_bank" />
+
+
+
+
+        <collection property="department" ofType="com.erp.entity.personnel.Department">
+            <id property="departmentId" column="department_id" />
+            <result property="departmentName" column="department_name" />
+            <result property="supervisor" column="supervisor" />
+            <result property="createUserId" column="create_user_id" />
+            <result property="creatorName" column="creator_name" />
+            <result property="departmentState" column="department_state" />
+            <result property="departmentCreateDate" column="department_create_date" />
+        </collection>
+
+        <collection property="position" ofType="com.erp.entity.personnel.Position">
+            <id property="positionId" column="position_id" />
+            <result property="jobTitle" column="job_title" />
+        </collection>
+
+
+        <collection property="grouping" ofType="com.erp.entity.personnel.Grouping">
+            <id property="groupingId" column="grouping_id" />
+            <result property="groupingName" column="grouping_name" />
+        </collection>
+
+
+
+
+    </resultMap>
+
+
+    <!--表字段-->
+    <sql id="sqlusercolumn">
+         user_id,job_number,user_name,password,department_id,gender,position_id,
+         education,identity_ard,nation,phone,emergency_user,emergency_phone,bank_card,bank,
+         hukou_type,present_address,address,school_by,marriage,user_state,user_img,
+         occupational,entry_date,dimission_date,social_security,age,birthdate,positive_dates,specialty,
+         education_undergo,project_team,filiality_fine_card,filiality_fine_bank
+    </sql>
+
+
+    <!--用户表条件查询-->
+    <sql id="sqlwhereusercolumn">
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="userId!= null and userId!=''">
+                user_id=#{userId}
+            </if>
+            <if test="jobNumber!= null and jobNumber!=''">
+                and  job_number=#{jobNumber}
+            </if>
+            <if test="userName!= null and userName!=''">
+                and user_name=#{userName}
+            </if>
+            <if test="password!= null and password!=''">
+                and password=#{password}
+            </if>
+
+            <if test="departmentId!= null and departmentId!=''">
+                and  department_id=#{departmentId}
+            </if>
+            <if test="gender!= null and gender!=''">
+                and  gender=#{gender}
+            </if>
+            <if test="education!= null and education!=''">
+                and  education=#{education}
+            </if>
+            <if test="phone!= null and phone!=''">
+                and  phone=#{phone}
+            </if>
+            <if test="userState!= null and userState!=''">
+                and  user_state=#{userState}
+            </if>
+            <if test="socialSecurity!= null and socialSecurity!=''">
+                and  social_security=#{socialSecurity}
+            </if>
+            <if test="entryDate!= null ">
+                and  entry_date=#{entryDate}
+            </if>
+            <if test="dimissionDate!= null and dimissionDate!=''">
+                and  dimission_date=#{dimissionDate}
+            </if>
+            <if test="projectTeam!= null and projectTeam!=''">
+                and  project_team=#{projectTeam}
+            </if>
+
+
+        </trim>
+    </sql>
+
+
+    <!--查询所有用户信息-->
+    <select id="selectByListUseByDepartmentr" parameterType="com.erp.entity.personnel.User" resultMap="userResult1">
+        SELECT a.*,b.* ,po.* ,gr.*  FROM jr_user a , jr_department b,jr_position po,jr_grouping gr
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="userId!= null and userId!=''">
+                a.user_id=#{userId}
+            </if>
+            <if test="jobNumber!= null and jobNumber!=''">
+                and  a.job_number=#{jobNumber}
+            </if>
+            <if test="userName!= null and userName!=''">
+                and a.user_name=#{userName}
+            </if>
+            <if test="password!= null and password!=''">
+                and a.password=#{password}
+            </if>
+
+            <if test="departmentId!= null and departmentId!=''">
+                and  a.department_id=#{departmentId}
+            </if>
+            <if test="positionId!= null and positionId!=''">
+                and  a.position_id=#{positionId}
+            </if>
+
+            <if test="gender!= null and gender!=''">
+                and  a.gender=#{gender}
+            </if>
+            <if test="education!= null and education!=''">
+                and  a.education=#{education}
+            </if>
+            <if test="phone!= null and phone!=''">
+                and  a.phone=#{phone}
+            </if>
+            <if test="userState!= null and userState!=''">
+                and  a.user_state=#{userState}
+            </if>
+            <if test="socialSecurity!= null and socialSecurity!=''">
+                and  a.social_security=#{socialSecurity}
+            </if>
+            <if test="entryDate!= null ">
+                and  a.entry_date=#{entryDate}
+            </if>
+            <if test="dimissionDate!= null ">
+                and  a.dimission_date=#{dimissionDate}
+            </if>
+            <if test="projectTeam!= null and projectTeam!=''">
+                and  a.project_team=#{projectTeam}
+            </if>
+            <if test="userState!= null and userState!=''">
+                and  a.user_state=#{userState}
+            </if>
+
+            and  a.department_id=b.department_id
+            and  a.position_id=po.position_id
+            and  a.project_team=gr.grouping_id
+
+
+        </trim>
+        Order By entry_date asc
+    </select>
+
+
+    <!-- 查询用户信息-->
+   <select id="selectByUserByDepartmentr" parameterType="com.erp.entity.personnel.User" resultMap="userResult1">
+       SELECT a.*,b.* ,po.* ,gr.*  FROM jr_user a , jr_department b,jr_position po,jr_grouping gr
+       <trim prefix="where" prefixOverrides="and" >
+           <if test="userId!= null and userId!=''">
+               a.user_id=#{userId}
+           </if>
+           <if test="jobNumber!= null and jobNumber!=''">
+               and  a.job_number=#{jobNumber}
+           </if>
+           <if test="userName!= null and userName!=''">
+               and a.user_name=#{userName}
+           </if>
+           <if test="password!= null and password!=''">
+               and a.password=#{password}
+           </if>
+
+           <if test="departmentId!= null and departmentId!=''">
+               and  a.department_id=#{departmentId}
+           </if>
+           <if test="gender!= null and gender!=''">
+               and  a.gender=#{gender}
+           </if>
+           <if test="education!= null and education!=''">
+               and  a.education=#{education}
+           </if>
+           <if test="phone!= null and phone!=''">
+               and  a.phone=#{phone}
+           </if>
+           <if test="userState!= null and userState!=''">
+               and  a.user_state=#{userState}
+           </if>
+           <if test="socialSecurity!= null and socialSecurity!=''">
+               and  a.social_security=#{socialSecurity}
+           </if>
+
+           <if test="projectTeam!= null and projectTeam!=''">
+               and  a.project_team=#{projectTeam}
+           </if>
+
+           and  a.department_id=b.department_id
+           and  a.position_id=po.position_id
+           and  a.project_team=gr.grouping_id
+
+       </trim>
+       Order By entry_date asc
+    </select>
+
+    <!-- 查询用户信息-->
+    <select id="selectByUser" parameterType="com.erp.entity.personnel.User" resultType="com.erp.entity.personnel.User">
+        select * from jr_user
+        <include refid="sqlwhereusercolumn"/>
+        Order By entry_date asc
+    </select>
+
+
+    <!-- 查询用户信息-->
+    <select id="selectByListUser" parameterType="com.erp.entity.personnel.User" resultType="com.erp.entity.personnel.User">
+        select * from jr_user
+        <include refid="sqlwhereusercolumn"/>
+        Order By entry_date asc
+    </select>
+
+
+
+
+    <insert id="addUser" parameterType="com.erp.entity.personnel.User">
+        insert into jr_user
+        (<include refid="sqlusercolumn"/>)
+        VALUES ( #{userId},#{jobNumber},#{userName},#{password},#{departmentId},#{gender},#{positionId},
+        #{education},#{identityArd},#{nation},#{phone},#{emergencyUser},#{emergencyPhone},#{bankCard},#{bank},
+        #{hukouType},#{presentAddress},#{address},#{schoolBy},#{marriage},#{userState},#{userImg},
+        #{occupational},#{entryDate},#{dimissionDate},#{socialSecurity},#{age}, #{birthdate},#{positiveDates},
+        #{specialty} , #{educationUndergo},#{projectTeam},#{filialityFineCard},#{filialityFineBank})
+    </insert>
+
+    <!--删除用户-->
+    <delete id="deleteuser" parameterType="java.lang.Long">
+     delete from jr_user where user_id=#{id}
+    </delete>
+
+
+
+
+    <!--更新用户信息-->
+    <update id="updateuser" parameterType="com.erp.entity.personnel.User">
+        update jr_user
+        <set>
+
+            <if test="jobNumber!= null and jobNumber!=''">
+                  job_number=#{jobNumber},
+            </if>
+            <if test="userName!= null and userName!=''">
+                 user_name=#{userName},
+            </if>
+            <if test="password!= null and password!=''">
+                 password=#{password},
+            </if>
+
+            <if test="departmentId!= null and departmentId!=''">
+                  department_id=#{departmentId},
+            </if>
+            <if test="gender!= null and gender!=''">
+                  gender=#{gender},
+            </if>
+
+            <if test="positionId!= null and positionId!=''">
+                  position_id=#{positionId},
+            </if>
+
+            <if test="education!= null and education!=''">
+                  education=#{education},
+            </if>
+            <if test="phone!= null and phone!=''">
+                  phone=#{phone},
+            </if>
+            <if test="userState!= null and userState!=''">
+                  user_state=#{userState},
+            </if>
+            <if test="socialSecurity!= null and socialSecurity!=''">
+                  social_security=#{socialSecurity},
+            </if>
+            <if test="identityArd!= null and identityArd!=''">
+                identity_ard=#{identityArd},
+            </if>
+            <if test="nation!= null and nation!=''">
+                nation=#{nation},
+            </if>
+            <if test="emergencyUser!= null and emergencyUser!=''">
+                emergency_user=#{emergencyUser},
+            </if>
+            <if test="emergencyPhone!= null and emergencyPhone!=''">
+                emergency_phone=#{emergencyPhone},
+            </if>
+            <if test="bankCard!= null and bankCard!=''">
+                bank_card=#{bankCard},
+            </if>
+            <if test="hukouType!= null and hukouType!=''">
+                hukou_type=#{hukouType},
+            </if>
+            <if test="presentAddress!= null and presentAddress!=''">
+                present_address=#{presentAddress},
+            </if>
+            <if test="address!= null and address!=''">
+                address=#{address},
+            </if>
+            <if test="schoolBy!= null and schoolBy!=''">
+                school_by=#{schoolBy},
+            </if>
+            <if test="marriage!= null and marriage!=''">
+                marriage=#{marriage},
+            </if>
+            <if test="userImg!= null and userImg!=''">
+                user_img=#{userImg},
+            </if>
+            <if test="occupational!= null and occupational!=''">
+                occupational=#{occupational},
+            </if>
+
+            <if test="age!= null and age!=''">
+                age=#{age},
+            </if>
+
+            <if test="birthdate!= null ">
+                birthdate=#{birthdate},
+            </if>
+
+
+            <if test="positiveDates!= null ">
+                positive_dates=#{positiveDates},
+            </if>
+
+            <if test="dimissionDate!= null ">
+                dimission_date=#{dimissionDate},
+            </if>
+            <if test="entryDate!= null ">
+                entry_date=#{entryDate},
+            </if>
+
+
+
+
+
+            <if test="specialty!= null and specialty!=''">
+                specialty=#{specialty},
+            </if>
+            <if test="bank!= null and bank!=''">
+                bank=#{bank},
+            </if>
+
+            <if test="educationUndergo!= null and educationUndergo!=''">
+                education_undergo=#{educationUndergo},
+            </if>
+
+            <if test="projectTeam!= null ">
+                project_team=#{projectTeam},
+            </if>
+
+            <if test="filialityFineCard!= null and filialityFineCard!=''">
+                filiality_fine_card=#{filialityFineCard},
+            </if>
+
+            <if test="filialityFineBank!= null and filialityFineBank!=''">
+                filiality_fine_bank=#{filialityFineBank}
+            </if>
+
+
+
+        </set>
+        where user_id = #{userId}
+    </update>
+
+
+
+
+
+    <!-- 查询用户信息-->
+    <select id="usermain" parameterType="com.erp.entity.personnel.User" resultMap="userResult1">
+        SELECT a.*,b.* ,po.*  FROM jr_user a , jr_department b,jr_position po
+        where a.user_id=b.create_user_id
+              and  a.position_id= po.position_id
+        Order By entry_date asc limit 6
+    </select>
+
+</mapper>

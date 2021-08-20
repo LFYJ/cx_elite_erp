@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.ReceiveDao">
+
+
+
+    <resultMap type="com.erp.entity.personnel.Receive" id="receiveResult1">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="wno" column="wno" />
+        <result property="goods" column="goods" />
+        <result property="createdate" column="createdate" />
+        <result property="state" column="state" />
+
+        <collection property="department" ofType="com.erp.entity.personnel.Department">
+            <result property="departmentName" column="department_name" />
+        </collection>
+
+        <collection property="position" ofType="com.erp.entity.personnel.Position">
+            <result property="jobTitle" column="job_title" />
+        </collection>
+
+        <collection property="user" ofType="com.erp.entity.personnel.User">
+            <result property="userName" column="user_name" />
+            <result property="userName" column="user_name" />
+        </collection>
+
+
+    </resultMap>
+
+
+    <!-- 查询员工领取记录-->
+    <select id="selectByReceive" parameterType="java.util.Map" resultMap="receiveResult1">
+        SELECT re.*,a.user_name,b.department_name ,po.job_title
+         FROM jr_receive re,jr_user a , jr_department b,jr_position po
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="departmentId!=null and departmentId!=''">
+                a.department_id=#{departmentId}
+            </if>
+            <if test=" username!=null and username!=''">
+                and  a.user_name=#{username}
+            </if>
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+            and  re.user_id=a.user_id
+            and  a.department_id=b.department_id
+            and  a.position_id= po.position_id
+
+        </trim>
+        Order By re.createdate Desc
+    </select>
+
+
+
+
+    <!-- 查询员工领取记录-->
+    <select id="selectByReceivebyid" parameterType="java.util.Map" resultMap="receiveResult1">
+        SELECT re.*,a.user_name,b.department_name ,po.job_title
+        FROM jr_receive re,jr_user a , jr_department b,jr_position po
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="departmentId!=null and departmentId!=''">
+                a.department_id=#{departmentId}
+            </if>
+            <if test=" username!=null and username!=''">
+                and  a.user_name=#{username}
+            </if>
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+            and  re.user_id=a.user_id
+            and  a.department_id=b.department_id
+            and  a.position_id= po.position_id
+
+        </trim>
+        Order By re.createdate Desc
+    </select>
+
+
+
+    <!--添加领取记录-->
+    <insert id="addReceive" parameterType="com.erp.entity.personnel.Receive">
+        insert into jr_receive
+        VALUES ( #{id},#{userId},#{wno},#{goods},#{createdate},#{state})
+    </insert>
+
+
+
+
+    <delete id="deletereceive" parameterType="java.lang.Long">
+     delete from jr_receive where id=#{id}
+    </delete>
+
+
+
+
+    <!--更新领取信息-->
+    <update id="uptReceive" parameterType="com.erp.entity.personnel.Receive">
+        update jr_receive
+        <set>
+
+            <if test="goods!= null and goods!=''">
+                goods=#{goods}
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

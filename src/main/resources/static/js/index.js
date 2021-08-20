@@ -91,14 +91,16 @@
 	        type: 2,
 	        area: [w+'px', h +'px'],
 	        fix: false, //不固定
-	        maxmin: true,
+	        maxmin: false,
 	        shadeClose: true,
 	        shade:0.4,
 	        title: title,
-	        content: url
+	        content: url,
+
+
 	    });
 	    /*if(full){
-	       layer.full(index); 
+	       layer.full(index);
 	    }*/
 	};
 

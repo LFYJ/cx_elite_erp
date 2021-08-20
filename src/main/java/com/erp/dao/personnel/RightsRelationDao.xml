@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.RightsRelationDao">
+
+
+
+
+    <insert id="addRightsRelation" parameterType="com.erp.entity.personnel.RightsRelation">
+        insert into jr_access_user
+        VALUES ( #{id},#{userId},#{authorityName},#{createdate})
+    </insert>
+
+
+
+    <!--更新用户信息-->
+    <update id="uopdRightsRelation" parameterType="com.erp.entity.personnel.RightsRelation">
+        update jr_access_user
+        <set>
+            <if test="authorityName!= null and authorityName!=''">
+                authority_name=#{authorityName}
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+
+
+
+
+    <!-- 查询用户权限-->
+    <select id="selectByidrightsRelation" parameterType="com.erp.entity.personnel.RightsRelation" resultType="com.erp.entity.personnel.RightsRelation">
+        select * from jr_access_user
+       where user_id = #{userId}
+    </select>
+
+
+</mapper>

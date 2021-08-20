@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.dao.personnel.PositionDao">
+
+
+
+
+
+    <!-- 查询职位信息-->
+    <select id="selectByListPositionBypid" parameterType="com.erp.entity.personnel.Position" resultType="com.erp.entity.personnel.Position">
+        select * from jr_position
+
+        <trim prefix="where" prefixOverrides="and" >
+            <if test="pid!=null and pid!=''">
+                and pid=#{pid}
+            </if>
+        </trim>
+
+        Order By create_date asc
+    </select>
+
+
+
+    <!--添加领取记录-->
+    <insert id="addPosition" parameterType="com.erp.entity.personnel.Position">
+        insert into jr_position
+        VALUES ( #{positionId},#{pid},#{jobTitle},#{positionCreatorName},#{createDate},#{positionState})
+    </insert>
+
+
+
+    <delete id="positiondelete" parameterType="java.lang.Long">
+     delete from jr_position where position_id=#{id}
+    </delete>
+
+
+
+    <!-- 查询职位信息-->
+    <select id="selectByPosition" parameterType="com.erp.entity.personnel.Position" resultType="com.erp.entity.personnel.Position">
+        select * from jr_position  where position_id=#{positionId}
+        Order By create_date asc
+    </select>
+
+
+
+
+    <!--更新职位信息-->
+    <update id="uptPosition" parameterType="com.erp.entity.personnel.Position">
+        update jr_position
+        <set>
+
+            <if test="jobTitle!= null and jobTitle!=''">
+                job_title=#{jobTitle}
+            </if>
+
+        </set>
+        where position_id = #{positionId}
+    </update>
+
+</mapper>
